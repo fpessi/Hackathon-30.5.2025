@@ -1,6 +1,8 @@
 import sys
 import os
 
+from ai_communication import request
+
 from Take_picture import take_picture
 
 from PyQt6.QtCore import Qt
@@ -107,6 +109,13 @@ class StartWindow(GUI):
   def advice_clicked(self):
     text, ok = QInputDialog.getText(self, "Advice", "What advice do you need?")
     if ok and text != "":
+      result = request(text)  # the users text is sent to the ai to process
+      if result == None:
+        pass
+        #print("FAILURE: try again")
+      else:
+        edited_result = result["choices"][0]["text"]
+        #print(edited_result)
       #TODO pass to text AI. Pass AI reponse as class InformationWindow info parameter
       pass
 

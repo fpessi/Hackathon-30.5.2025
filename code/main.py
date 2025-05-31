@@ -1,8 +1,13 @@
-from ai_communication import request
-
+import sys
+from GUI import StartWindow
+from PyQt6.QtWidgets import QApplication
 
 def main():
-    print("Write your questions. Stop by writing exit.")
+    global app
+    app = QApplication(sys.argv)
+    start = StartWindow()
+    sys.exit(app.exec())
+    """print("Write your questions. Stop by writing exit.")
     x = input() #user writes their input for the ai
 
     while x.lower() != "exit":
@@ -18,6 +23,6 @@ def main():
             print("FAILURE: You need to write a string") #if the user somehow gives other value that string
             x = input()
             
-    print("Exiting software")
+    print("Exiting software")"""
 
 main()
