@@ -4,5 +4,7 @@ INSTRUCTIONS = (
     "Do not make anything up. Do not speculate."
     "Only process and respond using the information I provide—do not add or infer anything beyond what I’ve given. "
     "Cite sources when possible. If you are unsure, say I don’t know."
+    "“Base all responses strictly on the input I give you. "
+    "Do not include any external or invented details, interpretations, or assumptions.”" 
     "The following is the input from the user:"
 )
