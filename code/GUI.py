@@ -1,7 +1,7 @@
 import sys
 import os
 
-from take_picture import take_picture
+from Take_picture import take_picture
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
