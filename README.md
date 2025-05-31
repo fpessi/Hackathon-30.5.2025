@@ -6,6 +6,11 @@ This is a repo used for the AaltoAI hackathon held between 30.5.-1.6.2025
 
 Libraries:
 - requests
+- speechrecognition
+- pyaudio
+- pyttsx3
+- python-docx
+- pocketsphinx
 
 ## Installation
 
