@@ -1,5 +1,6 @@
 #nettisivu troubleshoottaamista ja parannuksia varten https://docs.datacrunch.io/containers/tutorials/deploy-with-vllm-indepth#test-deployment
 
+import os
 import requests
 import sys
 import signal
@@ -14,7 +15,7 @@ def graceful_shutdown(signum, frame) -> None:
 
 def request(user_input) -> None:
     url = address+'v1/completions'
-    text=pdf_to_text.extract_text_from_pdf("../Case/Wartsila_engine.pdf")
+    text=pdf_to_text.extract_text_from_pdf(get_filepath())
     headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+key,
@@ -42,6 +43,12 @@ def request(user_input) -> None:
         print("Response body:", file=sys.stderr)
         print(response.text, file=sys.stderr)
         return None
+    
+def get_filepath():
+    absolute_path = os.path.dirname(__file__)
+    relative_path = r"../Case/Wartsila_engine.pdf"
+    filepath = os.path.join(absolute_path, relative_path)
+    return filepath
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, graceful_shutdown)
