@@ -12,6 +12,7 @@ Libraries:
 - python-docx
 - pocketsphinx
 - opencv-python
+- pyqt6
 
 ## Installation
 
