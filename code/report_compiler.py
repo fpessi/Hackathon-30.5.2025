@@ -1,6 +1,3 @@
-# This object compiles a docx format report from user input
-# Uses python-docx library
-
 from docx import Document
 from docx.shared import Pt, RGBColor
 import os
@@ -13,123 +10,79 @@ def get_output_directory():
     else:
         base_path = os.path.dirname(os.path.abspath(sys.argv[0]))
 
-    # Define relative path and create it if it doesn't exist
     relative_path = os.path.join(base_path, "..", "Case")
     os.makedirs(relative_path, exist_ok=True)
     return relative_path
 
-def make_report():
+def make_report(general_data, field_work_data, supply_data, special_info):
     doc = Document()
+
+    def style_run(run, size=14, bold=False):
+        run.font.name = 'Calibri'
+        run.font.size = Pt(size)
+        run.font.bold = bold
+        run.font.color.rgb = RGBColor(0, 0, 0)
 
     # Title
     title = doc.add_paragraph()
     run = title.add_run('Technical Field Report')
-    font = run.font
-    font.name = 'Calibri'
-    font.size = Pt(28)
-    font.bold = True
-    font.color.rgb = RGBColor(0, 0, 0)
+    style_run(run, size=28, bold=True)
 
-    # General Information Header
+    # Section: General Information
     general_header = doc.add_paragraph()
-    run2 = general_header.add_run('General Information')
-    font2 = run2.font
-    font2.name = 'Calibri'
-    font2.size = Pt(20)
-    font2.bold = True
-    font2.color.rgb = RGBColor(0, 0, 0)
+    run = general_header.add_run('General Information')
+    style_run(run, size=20, bold=True)
 
-    # Table 1: General Info
-    table1 = doc.add_table(rows=5, cols=2)
+    table1 = doc.add_table(rows=len(general_data), cols=2)
     table1.style = 'Table Grid'
-    general_info = ["Location", "Date", "Service personnel", "Equipment", "Time of service"]
-    general_answer = ["", "", "", "", ""]  # Placeholder or user input
-    for i, label in enumerate(general_info):
+    for i, (label, value) in enumerate(general_data.items()):
         cell_left = table1.cell(i, 0)
         cell_left.text = label
-        run_left = cell_left.paragraphs[0].runs[0]
-        run_left.font.name = 'Calibri'
-        run_left.font.size = Pt(14)
-    for i, value in enumerate(general_answer):
+        style_run(cell_left.paragraphs[0].runs[0])
         cell_right = table1.cell(i, 1)
         cell_right.text = value
-        run_right = cell_right.paragraphs[0].runs[0]
-        run_right.font.name = 'Calibri'
-        run_right.font.size = Pt(14)
+        style_run(cell_right.paragraphs[0].runs[0])
 
-    # Field Work Header
+    # Section: Field Work Description
     field_header = doc.add_paragraph()
-    run3 = field_header.add_run('Field Work Description')
-    font3 = run3.font
-    font3.name = 'Calibri'
-    font3.size = Pt(20)
-    font3.bold = True
-    font3.color.rgb = RGBColor(0, 0, 0)
+    run = field_header.add_run('Field Work Description')
+    style_run(run, size=20, bold=True)
 
-    # Table 2: Field Work
-    table2 = doc.add_table(rows=4, cols=2)
+    table2 = doc.add_table(rows=len(field_work_data), cols=2)
     table2.style = 'Table Grid'
-    description_info = ["Reason of service", "Work description", "Problems with service", "Notes"]
-    description_answer = ["", "", "", ""]  # Placeholder
-    for i, label in enumerate(description_info):
+    for i, (label, value) in enumerate(field_work_data.items()):
         cell_left = table2.cell(i, 0)
         cell_left.text = label
-        run_left = cell_left.paragraphs[0].runs[0]
-        run_left.font.name = 'Calibri'
-        run_left.font.size = Pt(14)
-    for i, value in enumerate(description_answer):
+        style_run(cell_left.paragraphs[0].runs[0])
         cell_right = table2.cell(i, 1)
         cell_right.text = value
-        run_right = cell_right.paragraphs[0].runs[0]
-        run_right.font.name = 'Calibri'
-        run_right.font.size = Pt(14)
+        style_run(cell_right.paragraphs[0].runs[0])
 
-    # Supply Info Header
+    # Section: Detailed Supply Information
     supply_header = doc.add_paragraph()
-    run4 = supply_header.add_run('Detailed Supply Information')
-    font4 = run4.font
-    font4.name = 'Calibri'
-    font4.size = Pt(20)
-    font4.bold = True
-    font4.color.rgb = RGBColor(0, 0, 0)
+    run = supply_header.add_run('Detailed Supply Information')
+    style_run(run, size=20, bold=True)
 
-    # Table 3: Supply Info
-    table3 = doc.add_table(rows=4, cols=2)
+    table3 = doc.add_table(rows=len(supply_data), cols=2)
     table3.style = 'Table Grid'
-    field_info = ["Supplies and amounts", "Weight", "Length", "Width"]
-    field_answer = ["", "", "", ""]  # Placeholder
-    for i, label in enumerate(field_info):
+    for i, (label, value) in enumerate(supply_data.items()):
         cell_left = table3.cell(i, 0)
         cell_left.text = label
-        run_left = cell_left.paragraphs[0].runs[0]
-        run_left.font.name = 'Calibri'
-        run_left.font.size = Pt(14)
-    for i, value in enumerate(field_answer):
+        style_run(cell_left.paragraphs[0].runs[0])
         cell_right = table3.cell(i, 1)
         cell_right.text = value
-        run_right = cell_right.paragraphs[0].runs[0]
-        run_right.font.name = 'Calibri'
-        run_right.font.size = Pt(14)
+        style_run(cell_right.paragraphs[0].runs[0])
 
-    # Special Info Header
+    # Section: Special Information
     special_header = doc.add_paragraph()
-    run5 = special_header.add_run('Special Information')
-    font5 = run5.font
-    font5.name = 'Calibri'
-    font5.size = Pt(20)
-    font5.bold = True
-    font5.color.rgb = RGBColor(0, 0, 0)
+    run = special_header.add_run('Special Information')
+    style_run(run, size=20, bold=True)
 
-    # Table 4: Special Info
     table4 = doc.add_table(rows=1, cols=1)
     table4.style = 'Table Grid'
-    special_information_answer = [""]  # Placeholder
-    for i, value in enumerate(special_information_answer):
-        cell = table4.cell(i, 0)
-        cell.text = value
-        run = cell.paragraphs[0].runs[0]
-        run.font.name = 'Calibri'
-        run.font.size = Pt(14)
+    cell = table4.cell(0, 0)
+    cell.text = special_info
+    style_run(cell.paragraphs[0].runs[0])
 
     # Save the document
     output_dir = get_output_directory()
@@ -137,6 +90,32 @@ def make_report():
     doc.save(output_path)
     print(f"Report saved to: {output_path}")
 
+# Example usage
+"""""
 if __name__ == "__main__":
-    make_report()
+    general_data = {
+        "Location": "Espoo headquarters",
+        "Date": "2025-06-01",
+        "Service personnel": "John Johnson",
+        "Equipment": "Excavator ZX200",
+        "Time of service": "08:00 - 12:30"
+    }
 
+    field_work_data = {
+        "Reason of service": "Scheduled maintenance",
+        "Work description": "Replaced hydraulic filters and checked fluid levels.",
+        "Problems with service": "None",
+        "Notes": "Unit is in good condition."
+    }
+
+    supply_data = {
+        "Supplies and amounts": "2x Hydraulic filter, 1L Oil",
+        "Weight": "3 kg",
+        "Length": "30 cm",
+        "Width": "10 cm"
+    }
+
+    special_info = "Next maintenance due in 3 months."
+
+    make_report(general_data, field_work_data, supply_data, special_info)
+"""
