@@ -1,6 +1,8 @@
 import sys
+
 from GUI import StartWindow
 from PyQt6.QtWidgets import QApplication
+from report_compiler import make_report
 
 def main():
     global app
@@ -25,4 +27,5 @@ def main():
             
     print("Exiting software")"""
 
-main()
+if __name__ == '__main__':
+    main()
