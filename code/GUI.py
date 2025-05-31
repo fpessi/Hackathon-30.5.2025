@@ -100,21 +100,26 @@ class StartWindow(GUI):
   def specs_clicked(self):
     text, ok = QInputDialog.getText(self, "Specifications", "What spesifications are you looking for?")
     if ok and text != "":
-      #TODO pass text to AI. Pass AI reponse as class InformationWindow info parameter
-      pass
+      result = request(text)  # the users text is sent to the ai to process
+      if result == None:
+        QMessageBox.critical(self, "Error", f"Couldn't anserw the question. Try again.")
+      else:
+        edited_result = result["choices"][0]["text"]
+        self.information = InformationWindow(edited_result)
+        self.close()
+        self.information.show()
 
   def advice_clicked(self):
     text, ok = QInputDialog.getText(self, "Advice", "What advice do you need?")
     if ok and text != "":
       result = request(text)  # the users text is sent to the ai to process
       if result == None:
-        pass
-        #print("FAILURE: try again")
+        QMessageBox.critical(self, "Error", f"Couldn't anserw the question. Try again.")
       else:
         edited_result = result["choices"][0]["text"]
-        #print(edited_result)
-      #TODO pass to text AI. Pass AI reponse as class InformationWindow info parameter
-      pass
+        self.information = InformationWindow(edited_result)
+        self.close()
+        self.information.show()
 
   def exit_clicked(self):
     ok = QMessageBox.question(self, "Exit", "Are you sure?")
@@ -254,9 +259,11 @@ class InformationWindow(GUI):
     self.setWindowTitle("Information you asked for")
 
     self.answer = QLabel()
+    self.answer.setAlignment(Qt.AlignmentFlag.AlignTop)
     self.answer.setText(info)
+    self.main_layout.addWidget(self.answer)
 
-    self.ok_button = QPushButton
+    self.ok_button = QPushButton("Ok")
     self.ok_button.setToolTip("Enter")
     self.ok_button.setShortcut('Enter')
     self.ok_button.clicked.connect(self.ok_clicked)
