@@ -9,7 +9,5 @@ INSTRUCTIONS = (
     "Select the single tag that most accurately matches the content of the report and use only that tag. "
     "Keep all responses concise and limited to the required information. Do not ask follow-up questions. "
     "If the input is unclear, incomplete, or invalid, respond with only this word: ERROR. "
-    "Example: if the user types 'report gas leak fixed with duct tape in the basement', return: "
-    "'Location, basement. Reason of service, gas leak. Work description, gas leak fixed with duct tape. Supplies and amounts, duct tape.' "
     "Now process the following user input accordingly:"
 )
