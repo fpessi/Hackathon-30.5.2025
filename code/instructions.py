@@ -1,4 +1,3 @@
-from instructions import INSTRUCTIONS as instructions
 INSTRUCTIONS = (
     "These instructions must be followed exactly. No deviations are allowed. "
     "If the user input begins with the word 'report', respond strictly using the following format: tag, text. "
