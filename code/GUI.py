@@ -47,13 +47,13 @@ class StartWindow(GUI):
     self.report_button.setShortcut('1')
     self.report_button.clicked.connect(self.report_clicked)
     self.main_layout.addWidget(self.report_button)
-
+    """
     self.todo_button = QPushButton("2. TODO list")
     self.todo_button.setToolTip("2")
     self.todo_button.setShortcut('2')
     self.todo_button.clicked.connect(self.TODO_clicked)
     self.main_layout.addWidget(self.todo_button)
-
+    """
     self.specs_button = QPushButton("3. Ask specifications")
     self.specs_button.setToolTip("3")
     self.specs_button.setShortcut('3')
@@ -65,12 +65,6 @@ class StartWindow(GUI):
     self.advice_button.setShortcut('4')
     self.advice_button.clicked.connect(self.advice_clicked)
     self.main_layout.addWidget(self.advice_button)
-
-    self.edit_button = QPushButton("5. Edit report")
-    self.edit_button.setToolTip("5")
-    self.edit_button.setShortcut('5')
-    self.edit_button.clicked.connect(self.edit_clicked)
-    self.main_layout.addWidget(self.edit_button)
 
     self.exit_button = QPushButton("6. Exit")
     self.exit_button.setToolTip("6")
@@ -89,6 +83,7 @@ class StartWindow(GUI):
       self.report.close()
       self.report = None
 
+  """
   def TODO_clicked(self):
     if self.TODO is None:
       self.TODO = TODOWindow()
@@ -97,9 +92,10 @@ class StartWindow(GUI):
     else:
       self.TODO.close()
       self.TODO = None
+  """
 
   def specs_clicked(self):
-    text, ok = QInputDialog.getText(self, "Spesifications", "What spesifications are you looking for?")
+    text, ok = QInputDialog.getText(self, "Specifications", "What spesifications are you looking for?")
     if ok and text != "":
       #TODO pass text to AI. Pass AI reponse as class InformationWindow info parameter
       pass
@@ -109,15 +105,6 @@ class StartWindow(GUI):
     if ok and text != "":
       #TODO pass to text AI. Pass AI reponse as class InformationWindow info parameter
       pass
-
-  def edit_clicked(self):
-    if self.edit is None:
-      self.edit = EditWindow()
-      self.close()
-      self.edit.show()
-    else:
-      self.edit.close()
-      self.edit = None
 
   def exit_clicked(self):
     ok = QMessageBox.question(self, "Exit", "Are you sure?")
@@ -174,7 +161,7 @@ class ReportWindow(GUI):
   def submit_clicked(self):
     pass
 
-
+"""
 class TODOWindow(GUI):
   
   def __init__(self):
@@ -197,7 +184,7 @@ class TODOWindow(GUI):
 
   def update_TODO(self):
     pass
-
+"""
 
 class InformationWindow(GUI):
   
@@ -218,39 +205,6 @@ class InformationWindow(GUI):
     self.start = StartWindow()
     self.close()
     self.start.show()
-
-
-class EditWindow(GUI):
-  
-  def __init__(self):
-    super().__init__()
-    self.setWindowTitle("Edit report")
-
-    self.text_edit = QTextEdit()
-    self.main_layout.addWidget(self.text_edit)
-
-    self.button_layout = QHBoxLayout()
-    self.main_layout.addLayout(self.button_layout)
-
-    self.cancel_button = QPushButton("Cancel")
-    self.cancel_button.setToolTip("Esc")
-    self.cancel_button.setShortcut('Esc')
-    self.cancel_button.clicked.connect(self.cancel_clicked)
-    self.button_layout.addWidget(self.cancel_button)
-
-    self.submit_button = QPushButton("Submit")
-    self.submit_button.setToolTip("Enter")
-    self.submit_button.setShortcut('Enter')
-    self.submit_button.clicked.connect(self.submit_clicked)
-    self.button_layout.addWidget(self.submit_button)
-
-  def cancel_clicked(self):
-    self.start = StartWindow()
-    self.close()
-    self.start.show()
-
-  def submit_clicked(self):
-    pass
 
 
 global app
