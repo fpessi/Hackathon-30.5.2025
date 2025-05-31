@@ -4,6 +4,7 @@ import os
 from ai_communication import request
 
 from Take_picture import take_picture
+from spire.doc import Document, FileFormat
 
 from PyQt6.QtCore import Qt
 from PyQt6.QtGui import QPixmap
@@ -134,6 +135,7 @@ class ReportWindow(GUI):
     self.setWindowTitle("Report")
 
     self.text_edit = QTextEdit(self)
+    self.update_text()
     self.main_layout.addWidget(self.text_edit)
 
     self.button_layout = QHBoxLayout()
@@ -168,7 +170,57 @@ class ReportWindow(GUI):
     self.show()
 
   def submit_clicked(self):
-    pass
+    filepath = self.get_filepath(False)
+    txt = self.text_edit.toMarkdown()
+
+    try:
+      with open(filepath, 'w') as fp:
+        fp.write(txt)
+    except OSError as e:
+      QMessageBox.critical(self, "Error", f"Couldn't save report. Error: {e}")
+
+    self.Md2Word()
+
+    self.start = StartWindow()
+    self.close()
+    self.start.show()
+
+  def update_text(self):
+    self.Word2Md()
+
+    filepath = self.get_filepath(False)
+
+    try:
+      with open(filepath, 'r') as fp:
+        txt = fp.read()
+    except OSError as e:
+      QMessageBox.critical(self, "Error", f"Couldn't load report. Error: {e}")
+
+    self.text_edit.setMarkdown(txt)
+
+  def Word2Md(self):
+    doc = Document()
+    doc.LoadFromFile(self.get_filepath(True))
+    doc.SaveToFile(self.get_filepath(False), FileFormat.Markdown)
+    doc.Dispose()
+
+  def Md2Word(self):
+    doc = Document()
+    doc.LoadFromFile(self.get_filepath(False))
+    doc.SaveToFile(self.get_filepath(True), FileFormat.Docx2016)
+    doc.Dispose()
+
+  def get_filepath(self, docx):
+    if docx:
+      absolute_path = os.path.dirname(__file__)
+      relative_path = r"../Case/field_report.docx"
+      filepath = os.path.join(absolute_path, relative_path)
+    else:
+      absolute_path = os.path.dirname(__file__)
+      relative_path = r"../assets/documents/field_report.md"
+      filepath = os.path.join(absolute_path, relative_path)
+
+    return filepath
 
 """
 class TODOWindow(GUI):
@@ -214,9 +266,3 @@ class InformationWindow(GUI):
     self.start = StartWindow()
     self.close()
     self.start.show()
-
-
-global app
-app = QApplication(sys.argv)
-start = StartWindow()
-sys.exit(app.exec())
