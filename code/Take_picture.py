@@ -1,11 +1,31 @@
 # program to capture single image from webcam in python
-from cv2 import VideoCapture, imshow, imwrite, waitKey, destroyWindow, imread
+import cv2
+from cv2 import VideoCapture, imshow, imwrite, waitKey, destroyWindow
 import os
 def Take_picture():
     # initialize the camera
     # If you have multiple camera connected with
     # current device, assign a value in cam_port
     # variable according to that
+
+    cv2.namedWindow("preview")
+    vc = cv2.VideoCapture(0)
+
+    if vc.isOpened():  # try to get the first frame
+        rval, frame = vc.read()
+    else:
+        rval = False
+
+    while rval:
+        cv2.imshow("preview", frame)
+        rval, frame = vc.read()
+        key = cv2.waitKey(20)
+        if key == 32:  # exit on ESC
+            break
+
+    vc.release()
+    cv2.destroyWindow("preview")
+
     cam_port = 0
     cam = VideoCapture(cam_port)
 
