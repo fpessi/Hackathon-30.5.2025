@@ -17,16 +17,18 @@ class SpeechToText(object):
     self.mic = sr.Microphone()
 
   def get_speech(self):
-    try:
-      with self.mic as src:
-        print("Listening")
-        self.r.adjust_for_ambient_noise(src, duration=0.5)
-        audio = self.r.listen(src, 2)
+    with self.mic as src:
+      print("Listening")
+      self.r.adjust_for_ambient_noise(src, duration=0.5)
+      audio = self.r.listen(src, 2)
 
+    try:
       txt = self.r.recognize_sphinx(audio)
       print(f"Did you say: {txt}?")
-    except Exception as e:
-      print(f"ERROR: {e}")
+    except sr.UnknownValueError:
+      print("Didn't understand. Please repeat.")
+    except sr.RequestError as e:
+      print(f"Sphinx error: {e}")
 
 stt = SpeechToText()
 stt.get_speech()
