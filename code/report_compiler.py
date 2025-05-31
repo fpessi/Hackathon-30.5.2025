@@ -12,7 +12,7 @@ doc = Document()
 title = doc.add_paragraph()
 run = title.add_run('Technical Field Report')
 font = run.font
-font.name = 'Arial'
+font.name = 'Calibri'
 font.size = Pt(28)
 font.bold = True
 font.color.rgb = RGBColor(0, 0, 0)
@@ -104,6 +104,27 @@ for i, label in enumerate(field_answer):
     run_left = paragraph_left.add_run(label)
     run_left.font.name = 'Calibri'
     run_left.font.size = Pt(14)
+
+field_header = doc.add_paragraph()
+run5 = field_header.add_run('Special information ')
+font5 = run5.font
+font5.name = 'Calibri'
+font5.size = Pt(20)
+font5.bold = True
+font5.color.rgb = RGBColor(0, 0, 0)
+
+
+table4 = doc.add_table(rows=1, cols=1)
+table4.style = 'Table Grid'
+special_information_answer=[]
+for i, label in enumerate(special_information_answer):
+    cell_left = table4.cell(i, 0)
+    paragraph_left = cell_left.paragraphs[0]
+    paragraph_left.clear()
+    run_left = paragraph_left.add_run(label)
+    run_left.font.name = 'Calibri'
+    run_left.font.size = Pt(14)
+
 
 # Tallenna dokumentti
 doc.save("formatted_field_report.docx")
