@@ -150,14 +150,14 @@ class ReportWindow(GUI):
     self.button_layout.addWidget(self.cancel_button)
 
     self.image_button = QPushButton("Add Image")
-    self.image_button.setToolTip("I")
-    self.image_button.setShortcut('I')
+    self.image_button.setToolTip("Ctrl+I")
+    self.image_button.setShortcut('Ctrl+I')
     self.image_button.clicked.connect(self.image_clicked)
     self.button_layout.addWidget(self.image_button)
 
     self.submit_button = QPushButton("Submit")
-    self.submit_button.setToolTip("Enter")
-    self.submit_button.setShortcut('Enter')
+    self.submit_button.setToolTip("Ctrl+Enter")
+    self.submit_button.setShortcut('Ctrl+Enter')
     self.submit_button.clicked.connect(self.submit_clicked)
     self.button_layout.addWidget(self.submit_button)
 
