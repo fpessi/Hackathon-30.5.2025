@@ -1,6 +1,6 @@
 from ai_communication import request
 def main():
-    print("Write your questions. Stop by writing exit")
+    print("Write your questions. Stop by writing exit.")
     x=input() #user writes their input for the ai
     while x.lower()!="exit":
         if isinstance(x,str):
