@@ -15,9 +15,11 @@ class GUI(QMainWindow):
     super().__init__()
     self.setGeometry(0, 0, 720, 405)
     self.statusBar().setStatusTip("This is a statusbar")
+
     self.main_widget = QWidget()
     self.main_layout = QVBoxLayout()
     self.main_widget.setLayout(self.main_layout)
+
     self.setCentralWidget(self.main_widget)
 
 
@@ -28,8 +30,12 @@ class StartWindow(GUI):
     self.setWindowTitle("Work Buddy")
 
     self.report = None
+    self.TODO = None
+    self.specs = None
+    self.advice = None
+    self.edit = None
 
-    self.logo = QLabel(self)
+    self.logo = QLabel()
     filepath = self.get_image_filepath()
     self.logo.setPixmap(QPixmap(filepath))
     self.main_layout.addWidget(self.logo)
@@ -49,7 +55,7 @@ class StartWindow(GUI):
     self.specs_button.clicked.connect(self.specs_clicked)
     self.main_layout.addWidget(self.specs_button)
 
-    self.advice_button = QPushButton("4. Ask advice")
+    self.advice_button = QPushButton("4. Ask general advice")
     self.advice_button.setShortcut('4')
     self.advice_button.clicked.connect(self.advice_clicked)
     self.main_layout.addWidget(self.advice_button)
@@ -76,16 +82,30 @@ class StartWindow(GUI):
       self.report = None
 
   def TODO_clicked(self):
-    pass
+    if self.TODO is None:
+      self.TODO = TODOWindow()
+      self.close()
+      self.TODO.show()
+    else:
+      self.TODO.close()
+      self.TODO = None
 
   def specs_clicked(self):
+    #TODO input dialog
     pass
 
   def advice_clicked(self):
+    #TODO input dialog
     pass
 
   def edit_clicked(self):
-    pass
+    if self.edit is None:
+      self.edit = EditWindow()
+      self.close()
+      self.edit.show()
+    else:
+      self.edit.close()
+      self.edit = None
 
   def exit_clicked(self):
     ok = QMessageBox.question(self, "Exit", "Are you sure?")
@@ -142,19 +162,41 @@ class ReportWindow(GUI):
     pass
 
 
-class TODOWindow(QWidget):
+class TODOWindow(GUI):
+  
+  def __init__(self):
+    super().__init__()
+    self.setWindowTitle("TODO list")
+
+    self.TODO_list = QLabel()
+    self.main_layout.addWidget(self.TODO_list)
+
+    self.ok_button = QPushButton
+    self.ok_button.setToolTip("Enter")
+    self.ok_button.setShortcut('Enter')
+    self.ok_button.clicked.connect(self.ok_clicked)
+    self.main_layout.addWidget(self.ok_button)
+
+  def ok_clicked(self):
+    self.start = StartWindow()
+    self.close()
+    self.start.show()
+
+  def update_TODO(self):
+    pass
+
+
+class SpecsWindow(GUI):
   pass
 
 
-class SpecsWindow(QWidget):
+
+
+class AdviceWindow(GUI):
   pass
 
 
-class AdviceWindow(QWidget):
-  pass
-
-
-class EditWindow(QWidget):
+class EditWindow(GUI):
   pass
 
 
