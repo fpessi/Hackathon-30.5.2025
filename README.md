@@ -13,6 +13,7 @@ Libraries:
 - pocketsphinx
 - opencv-python
 - pyqt6
+- pymupdf
 
 ## Installation
 
