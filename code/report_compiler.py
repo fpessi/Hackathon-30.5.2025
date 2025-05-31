@@ -2,6 +2,8 @@
 # Uses python-docx library
 from docx import Document
 from docx.shared import Pt, RGBColor
+import os
+from cv2 import imwrite
 class Reporter(object):
 
   def __init__(self):
@@ -29,7 +31,7 @@ font2.color.rgb = RGBColor(0, 0, 0)
 #Taulukko 1
 table1 = doc.add_table(rows=5, cols=2)
 table1.style = 'Table Grid'
-general_info = ["Location", "Date", "Service personnel", "Area of service", "Time of service"]
+general_info = ["Location", "Date", "Service personel", "Equipment", "Time of service"]
 general_answer=[]
 for i, label in enumerate(general_info):
     cell_left = table1.cell(i, 0)
@@ -114,6 +116,7 @@ font5.bold = True
 font5.color.rgb = RGBColor(0, 0, 0)
 
 
+
 table4 = doc.add_table(rows=1, cols=1)
 table4.style = 'Table Grid'
 special_information_answer=[]
@@ -127,4 +130,9 @@ for i, label in enumerate(special_information_answer):
 
 
 # Tallenna dokumentti
-doc.save("formatted_field_report.docx")
+absolute_path = os.path.dirname(__file__)
+relative_path = r"..\Case"
+directory=os.path.join(absolute_path, relative_path)
+os.chdir(directory)
+doc.save("field_report.docx" )
+

@@ -38,3 +38,4 @@ def Take_picture():
         waitKey(0)
         destroyWindow("Picture.png")
 
+Take_picture()
