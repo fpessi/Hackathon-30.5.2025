@@ -7,8 +7,9 @@ def main():
             result=request(x) #the users text is sent to the ai to process
             if result==None:
                 print("FAILURE: try again")
-            edited_result=result["choices"][0]["text"]
-            print(edited_result)
+            else:
+                edited_result=result["choices"][0]["text"]
+                print(edited_result)
             x=input()
         else:
             print("FAILURE: You need to write a string") #if the user somehow gives other value that string
