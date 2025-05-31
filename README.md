@@ -14,6 +14,7 @@ Libraries:
 - opencv-python
 - pyqt6
 - pymupdf
+- spire-doc
 
 ## Installation
 
