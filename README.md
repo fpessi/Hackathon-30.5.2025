@@ -11,6 +11,7 @@ Libraries:
 - pyttsx3
 - python-docx
 - pocketsphinx
+- opencv-python
 
 ## Installation
 
