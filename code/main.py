@@ -1,12 +1,17 @@
 from ai_communication import request
 def main():
-    print("Write your questions")
-    x=input()
-    if isinstance(x,str):
-        result=request(x)["choices"]
-        print(result)
-    else:
-        "FAILURE: You need to write a string"
+    print("Write your questions. Stop by writing exit")
+    x=input() #user writes their input for the ai
+    while x.lower()!="exit":
+        if isinstance(x,str):
+            result=request(x)["choices"][0] #the users text is sent to the ai to process
+            edited_result=result["text"]
+            print(edited_result)
+            x=input()
+        else:
+            "FAILURE: You need to write a string" #if the user somehow gives other value that string
+            x = input()
+    print("Exiting software")
 
 
 main()
