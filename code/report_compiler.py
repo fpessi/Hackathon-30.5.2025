@@ -1,51 +1,109 @@
 # This object compiles a docx format report from user input
 # Uses python-docx library
-import docx
-
+from docx import Document
+from docx.shared import Pt, RGBColor
 class Reporter(object):
 
   def __init__(self):
     pass
 
+doc = Document()
+
+title = doc.add_paragraph()
+run = title.add_run('Technical Field Report')
+font = run.font
+font.name = 'Arial'
+font.size = Pt(28)
+font.bold = True
+font.color.rgb = RGBColor(0, 0, 0)
 
 
-# Create a document
-doc = docx.Document()
+general_header = doc.add_paragraph()
+run2 = general_header.add_run('General Information')
+font2 = run2.font
+font2.name = 'Calibri'
+font2.size = Pt(20)
+font2.bold = True
+font2.color.rgb = RGBColor(0, 0, 0)
 
-# Add a paragraph to the document
-p = doc.add_paragraph()
+#Taulukko 1
+table1 = doc.add_table(rows=5, cols=2)
+table1.style = 'Table Grid'
+general_info = ["Location", "Date", "Service personnel", "Area of service", "Time of service"]
+general_answer=[]
+for i, label in enumerate(general_info):
+    cell_left = table1.cell(i, 0)
+    paragraph_left = cell_left.paragraphs[0]
+    paragraph_left.clear()
+    run_left = paragraph_left.add_run(label)
+    run_left.font.name = 'Calibri'
+    run_left.font.size = Pt(14)
+for i, label in enumerate(general_answer):
+    cell_left = table1.cell(i, 1)
+    paragraph_left = cell_left.paragraphs[0]
+    paragraph_left.clear()
+    run_left = paragraph_left.add_run(label)
+    run_left.font.name = 'Calibri'
+    run_left.font.size = Pt(14)
 
-# Add some formatting to the paragraph
-p.paragraph_format.line_spacing = 1
-p.paragraph_format.space_after = 0
 
-# Add a run to the paragraph
-run = p.add_run("python-docx")
 
-# Add some formatting to the run
-run.bold = True
-run.italic = True
-run.font.name = 'Arial'
-run.font.size = docx.shared.Pt(16)
+field_header = doc.add_paragraph()
+run3 = field_header.add_run('Field Work Description')
+font3 = run3.font
+font3.name = 'Calibri'
+font3.size = Pt(20)
+font3.bold = True
+font3.color.rgb = RGBColor(0, 0, 0)
 
-# Add more text to the same paragraph
-run = p.add_run(" Tutorial")
+#Taulukko 2
+table2 = doc.add_table(rows=4, cols=2)
+table2.style = 'Table Grid'
+description_info = ["Reason of service", "Work description", "Problems with service", "Notes"]
+description_answer=[]
+for i, label in enumerate(description_info):
+    cell_left = table2.cell(i, 0)
+    paragraph_left = cell_left.paragraphs[0]
+    paragraph_left.clear()
+    run_left = paragraph_left.add_run(label)
+    run_left.font.name = 'Calibri'
+    run_left.font.size = Pt(14)
+for i, label in enumerate(description_answer):
+    cell_left = table2.cell(i, 1)
+    paragraph_left = cell_left.paragraphs[0]
+    paragraph_left.clear()
+    run_left = paragraph_left.add_run(label)
+    run_left.font.name = 'Calibri'
+    run_left.font.size = Pt(14)
 
-# Format the run
-run.bold = True
-run.font.name = 'Arial'
-run.font.size = docx.shared.Pt(16)
 
-# Add another paragraph (left blank for an empty line)
-doc.add_paragraph()
+supply_header = doc.add_paragraph()
+run4 = supply_header.add_run('Detailed Supply Information')
+font4 = run4.font
+font4.name = 'Calibri'
+font4.size = Pt(20)
+font4.bold = True
+font4.color.rgb = RGBColor(0, 0, 0)
 
-# Add another paragraph
-p = doc.add_paragraph()
+#Taulukko 3
+table3 = doc.add_table(rows=4, cols=2)
+table3.style = 'Table Grid'
+field_info = ["Supplies and amounts", "Weight", "Length", "Width"]
+field_answer=[]
+for i, label in enumerate(field_info):
+    cell_left = table3.cell(i, 0)
+    paragraph_left = cell_left.paragraphs[0]
+    paragraph_left.clear()
+    run_left = paragraph_left.add_run(label)
+    run_left.font.name = 'Calibri'
+    run_left.font.size = Pt(14)
+for i, label in enumerate(field_answer):
+    cell_left = table3.cell(i, 1)
+    paragraph_left = cell_left.paragraphs[0]
+    paragraph_left.clear()
+    run_left = paragraph_left.add_run(label)
+    run_left.font.name = 'Calibri'
+    run_left.font.size = Pt(14)
 
-# Add a run and format it
-run = p.add_run("This is my first python-docx tutorial!")
-run.font.name = 'Arial'
-run.font.size = docx.shared.Pt(12)
-
-# Save the document
-doc.save("docx-python Tutorial Demo.docx")
+# Tallenna dokumentti
+doc.save("formatted_field_report.docx")
