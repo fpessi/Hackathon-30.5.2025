@@ -91,7 +91,7 @@ def make_report(general_data, field_work_data, supply_data, special_info):
     print(f"Report saved to: {output_path}")
 
 # Example usage
-"""""
+"""
 if __name__ == "__main__":
     general_data = {
         "Location": "Espoo headquarters",
