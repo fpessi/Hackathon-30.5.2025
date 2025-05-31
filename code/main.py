@@ -4,12 +4,14 @@ def main():
     x=input() #user writes their input for the ai
     while x.lower()!="exit":
         if isinstance(x,str):
-            result=request(x)["choices"][0] #the users text is sent to the ai to process
-            edited_result=result["text"]
+            result=request(x) #the users text is sent to the ai to process
+            if result==None:
+                print("FAILURE: try again")
+            edited_result=result["choices"][0]["text"]
             print(edited_result)
             x=input()
         else:
-            "FAILURE: You need to write a string" #if the user somehow gives other value that string
+            print("FAILURE: You need to write a string") #if the user somehow gives other value that string
             x = input()
     print("Exiting software")
 
