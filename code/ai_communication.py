@@ -5,6 +5,7 @@ import sys
 import signal
 from api_key import KEY as key
 from address import ADDRESS as address
+from instructions import INSTRUCTIONS as instructions
 
 def graceful_shutdown(signum, frame) -> None:
     print(f"\nSignal {signum} received at line {frame.f_lineno} in {frame.f_code.co_filename}")
@@ -20,7 +21,7 @@ def request(user_input) -> None:
 
     data = {
         "model": "deepseek-ai/deepseek-llm-7b-chat",
-        "prompt": f"{user_input}",
+        "prompt": f"{instructions} {user_input}",
         "max_tokens": 128,
         "temperature": 0.7,
         "top_p": 0.9
