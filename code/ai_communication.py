@@ -20,7 +20,7 @@ def request(user_input) -> None:
 
     data = {
         "model": "deepseek-ai/deepseek-llm-7b-chat",
-        "prompt": +user_input,
+        "prompt": "{user_input}",
         "max_tokens": 128,
         "temperature": 0.7,
         "top_p": 0.9
