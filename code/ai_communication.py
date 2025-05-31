@@ -14,7 +14,7 @@ def graceful_shutdown(signum, frame) -> None:
 
 def request(user_input) -> None:
     url = address+'v1/completions'
-    text=pdf_to_text.extract_text_from_pdf(".pytest_cache/Wartsila_engine.pdf")
+    text=pdf_to_text.extract_text_from_pdf("../Case/Wartsila_engine.pdf")
     headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+key,
