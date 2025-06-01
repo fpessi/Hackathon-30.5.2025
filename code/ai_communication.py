@@ -9,11 +9,11 @@ from address import ADDRESS as address
 from instructions import INSTRUCTIONS as instructions
 import pdf_to_text
 
-def graceful_shutdown(signum, frame) -> None:
+def graceful_shutdown(signum, frame):
     print(f"\nSignal {signum} received at line {frame.f_lineno} in {frame.f_code.co_filename}")
     sys.exit(0)
 
-def request(user_input) -> None:
+def request(user_input):
     url = address+'v1/completions'
     text=pdf_to_text.extract_text_from_pdf(get_filepath())
     headers = {
