@@ -10,11 +10,9 @@ Libraries:
 - pyaudio
 - pyttsx3
 - python-docx
-- pocketsphinx
 - opencv-python
 - pyqt6
 - pymupdf
-- spire-doc
 
 ## Installation
 
