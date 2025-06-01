@@ -27,5 +27,3 @@
 
 **Special information**
 
-|     |
-|-----|

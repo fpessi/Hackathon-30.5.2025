@@ -95,7 +95,7 @@ class SpeechToText(TextToSpeech):
         return
       txt + '\n'
       try:
-        with open(self.get_filepath(), 'w') as fp:
+        with open(self.get_filepath(), 'a') as fp:
           fp.write(txt)
       except OSError as e:
         print(f"Write error: {e}")
@@ -106,6 +106,6 @@ class SpeechToText(TextToSpeech):
     
   def get_filepath(self):
     absolute_path = os.path.dirname(__file__)
-    relative_path = r"../Case/Additional_reports.txt"
+    relative_path = r"../Case/field_report.md"
     filepath = os.path.join(absolute_path, relative_path)
     return filepath

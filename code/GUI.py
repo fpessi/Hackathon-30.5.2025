@@ -91,6 +91,8 @@ class StartWindow(GUI):
     self.voice_control.action()
   
   def specs_clicked(self):
+    """This function can ask specifications of the service item
+    """
     text, ok = QInputDialog.getText(self, "Specifications", "What spesifications are you looking for?")
     if ok and text != "":
       result = request(text)  # the users text is sent to the ai to process
