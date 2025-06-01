@@ -1,5 +1,8 @@
+import os
 import pyttsx3
 import speech_recognition as sr
+
+from ai_communication import request
 
 
 class TextToSpeech(object):
@@ -18,8 +21,8 @@ class SpeechToText(TextToSpeech):
     super().__init__()
     self.r = sr.Recognizer()
     self.mic = sr.Microphone()
-    self.listen_for_keyword()
-
+    # self.listen_for_keyword()
+  """
   def listen_for_keyword(self):
     with self.mic as src:
       self.r.adjust_for_ambient_noise(src, duration=0.5)
@@ -28,10 +31,9 @@ class SpeechToText(TextToSpeech):
         try:
           audio = self.r.listen(src)
 
-          txt = self.r.recognize_sphinx(audio, keywor_entries=[("work buddy", 1.0)])
+          txt = self.r.recognize_sphinx(audio, keyword_entries=[("work buddy", 1.0)])
           txt.lower()
           if "work buddy" in txt:
-            print("Yes?")
             self.speak("Yes?")
             self.action()
 
@@ -39,39 +41,65 @@ class SpeechToText(TextToSpeech):
           pass
         except sr.RequestError as e:
           print(f"Speech recognition error: {e}")
-
+  """
   def get_speech(self):
-    with self.mic as src:
-      print("Listening")
-      self.r.adjust_for_ambient_noise(src, duration=0.5)
-      audio = self.r.listen(src, 2)
+    txt = None
 
     try:
+      with self.mic as src:
+        self.speak("Listening")
+        self.r.adjust_for_ambient_noise(src, duration=0.5)
+        audio = self.r.listen(src, 2)
+
       txt = self.r.recognize_sphinx(audio)
-      print(f"Did you say: {txt}?") #! <- Remove from final program
+      print(f"Input: {txt}")
 
     except sr.UnknownValueError:
       print("Didn't understand. Please repeat.")
     except sr.RequestError as e:
       print(f"Speech recognition error: {e}")
+    except Exception as e:
+      print(f"Error: {e}")
     
     return txt
 
   def action(self):
     txt = self.get_speech()
-    txt.strip()
+    if txt == None:
+      return
     txt.lower()
 
     if txt == "give advice":
       self.speak("What advice do you need?")
       txt = self.get_speech()
+
+      result = request(txt)
+      result_txt = result["choices"][0]["text"]
+      self.speak(result_txt)
     elif txt == "give specifications":
       self.speak("What specifications do you need?")
       txt = self.get_speech()
-    elif txt == "what status":
-      txt = self.get_speech()
+
+      result = request(txt)
+      result_txt = result["choices"][0]["text"]
+      self.speak(result_txt)
     elif txt == "report":
       self.speak("What do you want to report?")
       txt = self.get_speech()
+
+      txt + '\n'
+      try:
+        with open(self.get_filepath(), 'w') as fp:
+          fp.write(txt)
+      except OSError as e:
+        print(f"Write error: {e}")
     else:
-      txt = self.get_speech()
+      result = request(txt)
+      result_txt = result["choices"][0]["text"]
+      self.speak(result_txt)
+    
+  def get_filepath(self):
+    absolute_path = os.path.dirname(__file__)
+    relative_path = r"../Case/Additional_reports.txt"
+    filepath = os.path.join(absolute_path, relative_path)
+    return filepath

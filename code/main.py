@@ -1,6 +1,8 @@
 import sys
+
 from GUI import StartWindow
 from PyQt6.QtWidgets import QApplication
+
 
 def main():
     global app
