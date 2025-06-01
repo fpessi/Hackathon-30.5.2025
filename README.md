@@ -3,6 +3,8 @@ Pessi Fabritius, Rasmus Mäkinen, Justus Lehtola
 
 This is a repo used for the AaltoAI hackathon held between 30.5.-1.6.2025
 
+![Project Image](https://github.com/fpessi/Hackathon-30.5.2025/blob/main/assets/pictures/WB_brochure.png)
+
 ## Prerequisites
 
 Libraries:
