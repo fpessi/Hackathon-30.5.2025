@@ -7,11 +7,21 @@ from address import ADDRESS as address
 from instructions import INSTRUCTIONS as instructions
 import pdf_to_text
 
+
 def graceful_shutdown(signum, frame) -> None:
     print(f"\nSignal {signum} received at line {frame.f_lineno} in {frame.f_code.co_filename}")
     sys.exit(0)
 
 def request(user_input,type) -> None:
+    """Prompts the AI model
+
+    Args:
+        user_input (str): prompt for AI
+        type (str): defines predefined AI instructions
+
+    Returns:
+        str: AI answer to prompt
+    """
     url = address+'v1/completions'
     text=pdf_to_text.extract_text_from_pdf(get_filepath())
     headers = {
@@ -52,6 +62,11 @@ def request(user_input,type) -> None:
         return None
     
 def get_filepath():
+    """Returns filepath to info document
+
+    Returns:
+        str: filepath to Wartsila_engine.pdf
+    """
     absolute_path = os.path.dirname(__file__)
     relative_path = r"../Case/Wartsila_engine.pdf"
     filepath = os.path.join(absolute_path, relative_path)

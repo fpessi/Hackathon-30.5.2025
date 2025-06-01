@@ -8,9 +8,16 @@ from ai_communication import request
 class TextToSpeech(object):
 
   def __init__(self):
+    """Initializes the class
+    """
     self.engine = pyttsx3.init()
 
   def speak(self, command):
+    """Uses pyttsx3 for text to speech
+
+    Args:
+        command (str): text to play as audio
+    """
     self.engine.say(command)
     self.engine.runAndWait()
 
@@ -18,11 +25,18 @@ class TextToSpeech(object):
 class SpeechToText(TextToSpeech):
 
   def __init__(self):
+    """Initializes the class
+    """
     super().__init__()
     self.r = sr.Recognizer()
     self.mic = sr.Microphone()
 
   def get_speech(self):
+    """listens for the user speech and returns it as a string
+
+    Returns:
+        str: string containing user input
+    """
     txt = None
 
     try:
@@ -44,6 +58,8 @@ class SpeechToText(TextToSpeech):
     return txt
 
   def action(self):
+    """Makes an action based on user input
+    """
     txt = self.get_speech()
     if txt == None:
       return
@@ -85,6 +101,11 @@ class SpeechToText(TextToSpeech):
       self.speak(result_txt)
     
   def get_filepath(self):
+    """Helper function which returns filepath to field_report.md
+
+    Returns:
+        str: filepath to field_report.md
+    """
     absolute_path = os.path.dirname(__file__)
     relative_path = r"../Case/field_report.md"
     filepath = os.path.join(absolute_path, relative_path)

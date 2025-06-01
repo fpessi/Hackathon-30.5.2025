@@ -4,7 +4,11 @@ import os
 import sys
 
 def get_output_directory():
-    """Ensure the output directory exists and return its path."""
+    """Ensures the output directory exists and returns its path
+
+    Returns:
+        str: filepath
+    """
     if '__file__' in globals():
         base_path = os.path.dirname(__file__)
     else:
@@ -14,14 +18,22 @@ def get_output_directory():
     os.makedirs(relative_path, exist_ok=True)
     return relative_path
 
-def make_report(general_data, field_work_data, supply_data, special_info):
-    doc = Document()
+def style_run(run, size=14, bold=False):
+    run.font.name = 'Calibri'
+    run.font.size = Pt(size)
+    run.font.bold = bold
+    run.font.color.rgb = RGBColor(0, 0, 0)
 
-    def style_run(run, size=14, bold=False):
-        run.font.name = 'Calibri'
-        run.font.size = Pt(size)
-        run.font.bold = bold
-        run.font.color.rgb = RGBColor(0, 0, 0)
+def make_report(general_data, field_work_data, supply_data, special_info):
+    """Makes a docx file based on input
+
+    Args:
+        general_data (dir): data for document
+        field_work_data (dir): data for document
+        supply_data (dir): data for document
+        special_info (dir): data for document
+    """
+    doc = Document()
 
     # Title
     title = doc.add_paragraph()

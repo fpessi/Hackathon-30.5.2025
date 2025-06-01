@@ -17,6 +17,8 @@ from PyQt6.QtWidgets import (
 class GUI(QMainWindow):
 
   def __init__(self):
+    """Initializes a parent class for all UI windows
+    """
     super().__init__()
     self.setGeometry(0, 0, 720, 405)
     self.statusBar().setStatusTip("This is a statusbar")
@@ -31,6 +33,8 @@ class GUI(QMainWindow):
 class StartWindow(GUI):
 
   def __init__(self):
+    """Initializes UI elements
+    """
     super().__init__()
     self.setWindowTitle("Work Buddy")
     self.voice_control = SpeechToText()
@@ -79,6 +83,8 @@ class StartWindow(GUI):
     self.show()
 
   def report_clicked(self):
+    """Opens ReportWindow
+    """
     if self.report is None:
       self.report = ReportWindow()
       self.close()
@@ -88,10 +94,12 @@ class StartWindow(GUI):
       self.report = None
   
   def voice_clicked(self):
+    """Starts listening for user voice input
+    """
     self.voice_control.action()
   
   def specs_clicked(self):
-    """This function can ask specifications of the service item
+    """Asks the AI for specs based on user input
     """
     text, ok = QInputDialog.getText(self, "Specifications", "What spesifications are you looking for?")
     if ok and text != "":
@@ -105,6 +113,8 @@ class StartWindow(GUI):
         self.information.show()
 
   def advice_clicked(self):
+    """Asks general advice from AI based on user input
+    """
     text, ok = QInputDialog.getText(self, "Advice", "What advice do you need?")
     if ok and text != "":
       result = request(text,"general")  # the users text is sent to the ai to process
@@ -117,11 +127,18 @@ class StartWindow(GUI):
         self.information.show()
 
   def exit_clicked(self):
+    """Closes the program
+    """
     ok = QMessageBox.question(self, "Exit", "Are you sure?")
     if ok == QMessageBox.StandardButton.Yes:
       sys.exit()
 
   def get_image_filepath(self):
+    """Returns a filepath to the logo
+
+    Returns:
+        str: filepath to logo.png
+    """
     absolute_path = os.path.dirname(__file__)
     relative_path = r"../assets/pictures/logo.png"
     filepath = os.path.join(absolute_path, relative_path)
@@ -131,6 +148,8 @@ class StartWindow(GUI):
 class ReportWindow(GUI):
   
   def __init__(self):
+    """Intializes UI elements
+    """
     super().__init__()
     self.setWindowTitle("Report")
 
@@ -160,16 +179,22 @@ class ReportWindow(GUI):
     self.button_layout.addWidget(self.submit_button)
 
   def cancel_clicked(self):
+    """Goes back to StartWindow
+    """
     self.start = StartWindow()
     self.close()
     self.start.show()
 
   def image_clicked(self):
+    """Starts the camera
+    """
     self.hide()
     take_picture()
     self.show()
 
   def submit_clicked(self):
+    """Saves edits made to field report
+    """
     filepath = self.get_filepath()
     txt = self.text_edit.toMarkdown()
 
@@ -184,6 +209,8 @@ class ReportWindow(GUI):
     self.start.show()
 
   def update_text(self):
+    """Updates the current field report to UI
+    """
     filepath = self.get_filepath()
 
     try:
@@ -195,40 +222,26 @@ class ReportWindow(GUI):
     self.text_edit.setMarkdown(txt)
 
   def get_filepath(self):
+    """Returns a filepath to the field report
+
+    Returns:
+        str: filepath to field_report.md
+    """
     absolute_path = os.path.dirname(__file__)
     relative_path = r"../Case/field_report.md"
     filepath = os.path.join(absolute_path, relative_path)
 
     return filepath
 
-"""
-class TODOWindow(GUI):
-  
-  def __init__(self):
-    super().__init__()
-    self.setWindowTitle("TODO list")
-
-    self.TODO_list = QLabel()
-    self.main_layout.addWidget(self.TODO_list)
-
-    self.ok_button = QPushButton
-    self.ok_button.setToolTip("Enter")
-    self.ok_button.setShortcut('Enter')
-    self.ok_button.clicked.connect(self.ok_clicked)
-    self.main_layout.addWidget(self.ok_button)
-
-  def ok_clicked(self):
-    self.start = StartWindow()
-    self.close()
-    self.start.show()
-
-  def update_TODO(self):
-    pass
-"""
 
 class InformationWindow(GUI):
   
   def __init__(self, info):
+    """Initializes UI elements
+
+    Args:
+        info (str): AI response to user input
+    """
     super().__init__()
     self.setWindowTitle("Information you asked for")
 
@@ -244,6 +257,8 @@ class InformationWindow(GUI):
     self.main_layout.addWidget(self.ok_button)
 
   def ok_clicked(self):
+    """Goes to StartWindow
+    """
     self.start = StartWindow()
     self.close()
     self.start.show()

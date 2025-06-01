@@ -5,6 +5,8 @@ from PyQt6.QtWidgets import QApplication
 
 
 def main():
+    """Starts the qt event loop
+    """
     global app
     app = QApplication(sys.argv)
     start = StartWindow()
