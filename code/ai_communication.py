@@ -1,5 +1,3 @@
-#nettisivu troubleshoottaamista ja parannuksia varten https://docs.datacrunch.io/containers/tutorials/deploy-with-vllm-indepth#test-deployment
-
 import os
 import requests
 import sys

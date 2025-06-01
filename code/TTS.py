@@ -21,27 +21,7 @@ class SpeechToText(TextToSpeech):
     super().__init__()
     self.r = sr.Recognizer()
     self.mic = sr.Microphone()
-    # self.listen_for_keyword()
-  """
-  def listen_for_keyword(self):
-    with self.mic as src:
-      self.r.adjust_for_ambient_noise(src, duration=0.5)
 
-      while True:
-        try:
-          audio = self.r.listen(src)
-
-          txt = self.r.recognize_sphinx(audio, keyword_entries=[("work buddy", 1.0)])
-          txt.lower()
-          if "work buddy" in txt:
-            self.speak("Yes?")
-            self.action()
-
-        except sr.UnknownValueError:
-          pass
-        except sr.RequestError as e:
-          print(f"Speech recognition error: {e}")
-  """
   def get_speech(self):
     txt = None
 

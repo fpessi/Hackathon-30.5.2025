@@ -4,9 +4,6 @@ import os
 
 def take_picture():
     # initialize the camera
-    # If you have multiple camera connected with
-    # current device, assign a value in cam_port
-    # variable according to that
 
     picture = False
     vc = VideoCapture(0)
