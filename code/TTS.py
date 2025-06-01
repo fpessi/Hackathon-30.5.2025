@@ -47,11 +47,11 @@ class SpeechToText(TextToSpeech):
 
     try:
       with self.mic as src:
+        self.r.adjust_for_ambient_noise(src, duration=1.0)
         self.speak("Listening")
-        self.r.adjust_for_ambient_noise(src, duration=0.5)
-        audio = self.r.listen(src, 2)
+        audio = self.r.listen(src, 4)
 
-      txt = self.r.recognize_sphinx(audio)
+      txt = self.r.recognize_google(audio)
       print(f"Input: {txt}")
 
     except sr.UnknownValueError:
