@@ -1,5 +1,3 @@
-#nettisivu troubleshoottaamista ja parannuksia varten https://docs.datacrunch.io/containers/tutorials/deploy-with-vllm-indepth#test-deployment
-
 import os
 import requests
 import sys
@@ -9,25 +7,34 @@ from address import ADDRESS as address
 from instructions import INSTRUCTIONS as instructions
 import pdf_to_text
 
-def graceful_shutdown(signum, frame):
+def graceful_shutdown(signum, frame) -> None:
     print(f"\nSignal {signum} received at line {frame.f_lineno} in {frame.f_code.co_filename}")
     sys.exit(0)
 
-def request(user_input):
+def request(user_input,type) -> None:
     url = address+'v1/completions'
     text=pdf_to_text.extract_text_from_pdf(get_filepath())
     headers = {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+key,
     }
+    if type == "general":
+        data = {
+            "model": "deepseek-ai/deepseek-llm-7b-chat",
+            "prompt": f"{user_input}",
+            "max_tokens": 128,
+            "temperature": 0.7,
+            "top_p": 0.9
+        }
 
-    data = {
-        "model": "deepseek-ai/deepseek-llm-7b-chat",
-        "prompt": f"Here is an information sheet to use:{text} Here are the instructions to handling user input: {instructions} Here is the user input: {user_input}",
-        "max_tokens": 128,
-        "temperature": 0.7,
-        "top_p": 0.9
-    }
+    else:
+        data = {
+            "model": "deepseek-ai/deepseek-llm-7b-chat",
+            "prompt": f"Here is an information sheet to use:{text} Here are the instructions to handling user input: {instructions} Here is the user input: {user_input}",
+            "max_tokens": 128,
+            "temperature": 0.7,
+            "top_p": 0.9
+        }
 
     response = requests.post(url, headers=headers, json=data)
     if response.status_code == 200:
