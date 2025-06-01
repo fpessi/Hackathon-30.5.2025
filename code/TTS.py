@@ -73,6 +73,8 @@ class SpeechToText(TextToSpeech):
       self.speak("What advice do you need?")
       txt = self.get_speech()
 
+      if txt == None:
+        return
       result = request(txt)
       result_txt = result["choices"][0]["text"]
       self.speak(result_txt)
@@ -80,6 +82,8 @@ class SpeechToText(TextToSpeech):
       self.speak("What specifications do you need?")
       txt = self.get_speech()
 
+      if txt == None:
+        return
       result = request(txt)
       result_txt = result["choices"][0]["text"]
       self.speak(result_txt)
@@ -87,6 +91,8 @@ class SpeechToText(TextToSpeech):
       self.speak("What do you want to report?")
       txt = self.get_speech()
 
+      if txt == None:
+        return
       txt + '\n'
       try:
         with open(self.get_filepath(), 'w') as fp:
