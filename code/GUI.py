@@ -168,7 +168,7 @@ class ReportWindow(GUI):
     self.show()
 
   def submit_clicked(self):
-    filepath = self.get_filepath(False)
+    filepath = self.get_filepath()
     txt = self.text_edit.toMarkdown()
 
     try:
@@ -177,16 +177,12 @@ class ReportWindow(GUI):
     except OSError as e:
       QMessageBox.critical(self, "Error", f"Couldn't save report. Error: {e}")
 
-    self.Md2Word()
-
     self.start = StartWindow()
     self.close()
     self.start.show()
 
   def update_text(self):
-    self.Word2Md()
-
-    filepath = self.get_filepath(False)
+    filepath = self.get_filepath()
 
     try:
       with open(filepath, 'r') as fp:
@@ -196,27 +192,10 @@ class ReportWindow(GUI):
 
     self.text_edit.setMarkdown(txt)
 
-  def Word2Md(self):
-    doc = Document()
-    doc.LoadFromFile(self.get_filepath(True))
-    doc.SaveToFile(self.get_filepath(False), FileFormat.Markdown)
-    doc.Dispose()
-
-  def Md2Word(self):
-    doc = Document()
-    doc.LoadFromFile(self.get_filepath(False))
-    doc.SaveToFile(self.get_filepath(True), FileFormat.Docx2016)
-    doc.Dispose()
-
-  def get_filepath(self, docx):
-    if docx:
-      absolute_path = os.path.dirname(__file__)
-      relative_path = r"../Case/field_report.docx"
-      filepath = os.path.join(absolute_path, relative_path)
-    else:
-      absolute_path = os.path.dirname(__file__)
-      relative_path = r"../assets/documents/field_report.md"
-      filepath = os.path.join(absolute_path, relative_path)
+  def get_filepath(self):
+    absolute_path = os.path.dirname(__file__)
+    relative_path = r"../Case/field_report.md"
+    filepath = os.path.join(absolute_path, relative_path)
 
     return filepath
 
