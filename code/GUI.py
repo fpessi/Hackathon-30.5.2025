@@ -2,12 +2,12 @@ import sys
 import os
 
 from ai_communication import request
-
+from TTS import SpeechToText
 from Take_picture import take_picture
 from spire.doc import Document, FileFormat
 
 from PyQt6.QtCore import Qt
-from PyQt6.QtGui import QPixmap
+from PyQt6.QtGui import QPixmap, QKeyEvent
 from PyQt6.QtWidgets import (
   QWidget, QMainWindow, QPushButton, QVBoxLayout, QHBoxLayout, 
   QInputDialog, QListWidget, QMessageBox, QLabel, QTextEdit, QApplication
@@ -33,6 +33,7 @@ class StartWindow(GUI):
   def __init__(self):
     super().__init__()
     self.setWindowTitle("Work Buddy")
+    self.voice_control = SpeechToText()
 
     self.report = None
     self.TODO = None
@@ -50,13 +51,7 @@ class StartWindow(GUI):
     self.report_button.setShortcut('1')
     self.report_button.clicked.connect(self.report_clicked)
     self.main_layout.addWidget(self.report_button)
-    """
-    self.todo_button = QPushButton("2. TODO list")
-    self.todo_button.setToolTip("2")
-    self.todo_button.setShortcut('2')
-    self.todo_button.clicked.connect(self.TODO_clicked)
-    self.main_layout.addWidget(self.todo_button)
-    """
+
     self.specs_button = QPushButton("2. Ask specifications")
     self.specs_button.setToolTip("2")
     self.specs_button.setShortcut('2')
@@ -68,10 +63,16 @@ class StartWindow(GUI):
     self.advice_button.setShortcut('3')
     self.advice_button.clicked.connect(self.advice_clicked)
     self.main_layout.addWidget(self.advice_button)
-
-    self.exit_button = QPushButton("4. Exit")
-    self.exit_button.setToolTip("4")
-    self.exit_button.setShortcut('4')
+    
+    self.voice_control_button = QPushButton("4. Voice control")
+    self.voice_control_button.setToolTip("4")
+    self.voice_control_button.setShortcut('4')
+    self.voice_control_button.clicked.connect(self.voice_clicked)
+    self.main_layout.addWidget(self.voice_control_button)
+    
+    self.exit_button = QPushButton("5. Exit")
+    self.exit_button.setToolTip("5")
+    self.exit_button.setShortcut('5')
     self.exit_button.clicked.connect(self.exit_clicked)
     self.main_layout.addWidget(self.exit_button)
 
@@ -85,18 +86,10 @@ class StartWindow(GUI):
     else:
       self.report.close()
       self.report = None
-
-  """
-  def TODO_clicked(self):
-    if self.TODO is None:
-      self.TODO = TODOWindow()
-      self.close()
-      self.TODO.show()
-    else:
-      self.TODO.close()
-      self.TODO = None
-  """
-
+  
+  def voice_clicked(self):
+    self.voice_control.action()
+  
   def specs_clicked(self):
     text, ok = QInputDialog.getText(self, "Specifications", "What spesifications are you looking for?")
     if ok and text != "":
