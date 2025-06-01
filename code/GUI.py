@@ -93,9 +93,9 @@ class StartWindow(GUI):
   def specs_clicked(self):
     text, ok = QInputDialog.getText(self, "Specifications", "What spesifications are you looking for?")
     if ok and text != "":
-      result = request(text)  # the users text is sent to the ai to process
+      result = request(text,"specs")  # the users text is sent to the ai to process
       if result == None:
-        QMessageBox.critical(self, "Error", f"Couldn't anserw the question. Try again.")
+        QMessageBox.critical(self, "Error", f"Couldn't answer the question. Try again.")
       else:
         edited_result = result["choices"][0]["text"]
         self.information = InformationWindow(edited_result)
@@ -105,9 +105,9 @@ class StartWindow(GUI):
   def advice_clicked(self):
     text, ok = QInputDialog.getText(self, "Advice", "What advice do you need?")
     if ok and text != "":
-      result = request(text)  # the users text is sent to the ai to process
+      result = request(text,"general")  # the users text is sent to the ai to process
       if result == None:
-        QMessageBox.critical(self, "Error", f"Couldn't anserw the question. Try again.")
+        QMessageBox.critical(self, "Error", f"Couldn't answer the question. Try again.")
       else:
         edited_result = result["choices"][0]["text"]
         self.information = InformationWindow(edited_result)

@@ -100,7 +100,7 @@ class SpeechToText(TextToSpeech):
       except OSError as e:
         print(f"Write error: {e}")
     else:
-      result = request(txt)
+      result = request(txt,"specs")
       result_txt = result["choices"][0]["text"]
       self.speak(result_txt)
     
